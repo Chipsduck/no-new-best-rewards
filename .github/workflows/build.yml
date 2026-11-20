@@ -17,16 +17,16 @@ jobs:
         include:
           - name: Windows
             os: windows-latest
-            platform: win
+            target: win
           - name: macOS
             os: macos-latest
-            platform: mac
+            target: mac
           - name: Android64
             os: ubuntu-latest
-            platform: android64
+            target: android64
           - name: Android32
             os: ubuntu-latest
-            platform: android32
+            target: android32
 
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Build Geode Mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          platform: ${{ matrix.platform }}
+          target: ${{ matrix.target }}
 
   combine:
     name: Package builds
