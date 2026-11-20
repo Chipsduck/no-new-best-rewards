@@ -10,6 +10,10 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 project(NoNewBestRewards VERSION 1.6.0)
 
+if (WIN32)
+    add_compile_definitions(_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH)
+endif()
+
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
