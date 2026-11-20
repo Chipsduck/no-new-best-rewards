@@ -1,8 +1,8 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
+#include <Geode/binding/GameManager.hpp>
 #include <Geode/ui/GeodeUI.hpp>
-#include <algorithm>
 
 using namespace geode::prelude;
 
@@ -42,10 +42,11 @@ class $modify(MyPauseLayer, PauseLayer) {
             sprite = CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png");
         }
 
-        float targetSize = 36.0f;
-        float maxSide = (std::max)(sprite->getContentSize().width, sprite->getContentSize().height);
-        if (maxSide > 0) {
-            sprite->setScale(targetSize / maxSide);
+        float w = sprite->getContentSize().width;
+        float h = sprite->getContentSize().height;
+        float maxSide = (w > h) ? w : h;
+        if (maxSide > 0.0f) {
+            sprite->setScale(36.0f / maxSide);
         }
 
         auto btn = CCMenuItemSpriteExtra::create(
