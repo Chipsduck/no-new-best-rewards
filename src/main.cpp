@@ -2,6 +2,7 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
+#include <algorithm>
 
 using namespace geode::prelude;
 
@@ -42,7 +43,7 @@ class $modify(MyPauseLayer, PauseLayer) {
         }
 
         float targetSize = 36.0f;
-        float maxSide = std::max(sprite->getContentSize().width, sprite->getContentSize().height);
+        float maxSide = (std::max)(sprite->getContentSize().width, sprite->getContentSize().height);
         if (maxSide > 0) {
             sprite->setScale(targetSize / maxSide);
         }
