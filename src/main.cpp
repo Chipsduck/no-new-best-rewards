@@ -1,64 +1,26 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/PauseLayer.hpp>
-#include <Geode/binding/GameManager.hpp>
-#include <Geode/ui/GeodeUI.hpp>
 
 using namespace geode::prelude;
 
-class $modify(MyPlayLayer, PlayLayer) {
-    void forceRestart(float) {
-        this->resetLevel();
-    }
-
+class $modify(NoNewBestPlayLayer, PlayLayer) {
     void showNewBest(bool newReward, int orbs, int diamonds, bool demonKey, bool noRetry, bool noTitle) {
-        bool hideOrbs = Mod::get()->getSettingValue<bool>("hide-orbs");
-        bool hideDiamonds = Mod::get()->getSettingValue<bool>("hide-diamonds");
-        bool hideKey = Mod::get()->getSettingValue<bool>("hide-demonkey");
+        auto mod = Mod::get();
 
-        int finalOrbs = hideOrbs ? 0 : orbs;
-        int finalDiamonds = hideDiamonds ? 0 : diamonds;
-        bool finalKey = hideKey ? false : demonKey;
-        bool finalReward = (finalOrbs > 0 || finalDiamonds > 0 || finalKey) ? newReward : false;
-
-        PlayLayer::showNewBest(finalReward, finalOrbs, finalDiamonds, finalKey, noRetry, noTitle);
-
-        if (!finalReward && !noRetry && GameManager::sharedState()->getGameVariable("0026")) {
-            this->scheduleOnce(schedule_selector(MyPlayLayer::forceRestart), 1.1f);
+        if (mod->getSettingValue<bool>("hide-orbs")) {
+            orbs = 0;
         }
-    }
-};
-
-class $modify(MyPauseLayer, PauseLayer) {
-    void onModSettings(CCObject*) {
-        geode::openSettingsPopup(Mod::get());
-    }
-
-    void customSetup() {
-        PauseLayer::customSetup();
-
-        auto sprite = CCSprite::create("button.png"_spr);
-        if (!sprite) {
-            sprite = CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png");
+        if (mod->getSettingValue<bool>("hide-diamonds")) {
+            diamonds = 0;
+        }
+        if (mod->getSettingValue<bool>("hide-demonkey")) {
+            demonKey = false;
         }
 
-        float w = sprite->getContentSize().width;
-        float h = sprite->getContentSize().height;
-        float maxSide = (w > h) ? w : h;
-        if (maxSide > 0.0f) {
-            sprite->setScale(36.0f / maxSide);
+        if (orbs == 0 && diamonds == 0 && !demonKey) {
+            newReward = false;
         }
 
-        auto btn = CCMenuItemSpriteExtra::create(
-            sprite,
-            this,
-            menu_selector(MyPauseLayer::onModSettings)
-        );
-        btn->setID("no-newbest-settings-btn"_spr);
-
-        if (auto menu = this->getChildByID("left-button-menu")) {
-            menu->addChild(btn);
-            menu->updateLayout();
-        }
+        PlayLayer::showNewBest(newReward, orbs, diamonds, demonKey, noRetry, noTitle);
     }
 };
