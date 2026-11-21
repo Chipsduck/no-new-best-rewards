@@ -8,31 +8,32 @@
 	},
 	"id": "chipsduck.no_newbest_rewards",
 	"name": "No NewBest Rewards",
-	"version": "v1.6.0",
+	"version": "v1.0.0",
 	"developer": "chipsduck",
-	"description": "New Best altindaki Mana Orb, Diamond ve Demon Key bildirimlerini gizler.",
-	"resources": {
-		"sprites": [
-			"resources/button.png"
-		]
-	},
+	"description": "Hides Mana Orbs, Diamonds, and Demon Keys on New Best popups.",
+	"repository": "https://github.com",
+	"tags": [
+		"offline",
+		"utility",
+		"enhancement"
+	],
 	"settings": {
 		"hide-orbs": {
 			"type": "bool",
 			"name": "Hide Mana Orbs",
-			"description": "New Best altinda Mana Orb cikmasini engeller.",
+			"description": "Hides Mana Orbs when achieving a New Best.",
 			"default": true
 		},
 		"hide-diamonds": {
 			"type": "bool",
 			"name": "Hide Diamonds",
-			"description": "New Best altinda Diamond cikmasini engeller.",
+			"description": "Hides Diamonds when achieving a New Best.",
 			"default": true
 		},
 		"hide-demonkey": {
 			"type": "bool",
 			"name": "Hide Demon Keys",
-			"description": "New Best altinda Demon Key cikmasini engeller.",
+			"description": "Hides Demon Keys when achieving a New Best.",
 			"default": true
 		}
 	}
