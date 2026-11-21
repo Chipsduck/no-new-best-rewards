@@ -8,7 +8,7 @@ else()
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(NoNewBestRewards VERSION 1.6.0)
+project(NoNewBestRewards VERSION 1.0.0)
 
 if (WIN32)
     add_compile_definitions(_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH)
